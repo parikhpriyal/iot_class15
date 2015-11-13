@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!-- saved from url=(0077)http://mrdoob.github.io/three.js/examples/webgl_panorama_equirectangular.html -->
+<html lang="en" style="visibility: visible;">
+	<head>
+		<!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
+		<title>Squiggy</title>
+
+		<!-- link to stylesheet -->
+		<link rel="stylesheet" type="text/css" href="style.css">
+
+		<!-- included google font -->
+		<link href='https://fonts.googleapis.com/css?family=Iceland' rel='stylesheet' type='text/css'>
+		<meta charset="utf-8">
+
+		<!-- your server info -->
+		<script src="//192.168.1.122:8000/socket.io/socket.io.js" type="text/javascript"></script>
+
+		<!-- script for calling data from server to website -->
+		<script>
+			var socket;
+			var dist;
+			var url='192.168.1.122';
+			var port=8000
+			
+			//initializing socket
+			socket = io.connect(url+':'+port);
+
+			//calling in data from the server
+			socket.on('toScreen', function (data) {
+				console.log(data);
+
+				//parsing data received and assigning to variables
+				var date = data.ParseData.FDate;
+				var time = data.ParseData.Time;
+				var weather = data.ParseData.Weather;
+				var info = data.ParseData.Info;
+				var power = data.ParseData.Power;
+				var food = data.ParseData.food;
+
+				//assigning variable data to elements for viewing on screen
+				document.getElementById("date").innerHTML = date;
+				document.getElementById("time").innerHTML = time;
+				document.getElementById("weather").innerHTML = weather;
+				document.getElementById("info").innerHTML = info;
+				document.getElementById("power").innerHTML = power;
+				document.getElementById("food").innerHTML = food;
+			});
+		</script>
+	</head>
+	
+	<body>
+
+		<div id="main">
+			<!-- look -->
+			<!-- row 1 -->
+			<div id="Day">
+				<!-- <img src="assets/temp.png"> -->
+				<div id="date"></div>
+			</div>
+			<div id="Name">Squiggy</div>
+			<!-- row 2 -->
+			<div id="TimeEnergy">
+				<div id="time"></div>
+				<div id="power"></div>
+			</div>
+			<!-- row 3 -->
+			<div id="WeathFood">
+				<div id="weather"></div>
+				<div id="food"></div>
+			</div>
+			<!-- row 4 -->
+			<div id="news">
+				<div id="info"></div>
+			</div>
+		</div>
+		
+	</body>
+</html>
