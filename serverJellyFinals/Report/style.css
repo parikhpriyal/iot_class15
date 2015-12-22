@@ -1,0 +1,32 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	width: 100vw;
+	height: 100vh;
+}
+
+#main{
+	width: 100vw;
+	height: 100vh;
+	background-image: url("assets2/map.png");
+	background-size: 110vw 110vh;
+	background-position: center;
+	opacity: 0.6;
+}
+
+input{
+	font-size: 2vw;
+	padding: 10px 15px 20px;
+	font-weight: bold;
+	border-radius: 1vh;
+	margin-top: 16vh; 
+	font-family: 'Iceland', cursive;
+}
+
+#but{
+	background-color: #0099ff;
+	border: solid 0.5vh #FFF;
+}

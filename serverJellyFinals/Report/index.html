@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+
+		<link rel="stylesheet" type="text/css" href="style.css">
+
+		<link href='https://fonts.googleapis.com/css?family=Iceland' rel='stylesheet' type='text/css'>
+
+		<!-- your server info -->
+		<script src="//192.168.1.91:3000/socket.io/socket.io.js" type="text/javascript"></script>
+
+		<script>
+			var socket;
+			var url='192.168.1.91';
+			var port=3000;
+			
+			//initializing socket
+			socket = io.connect(url+':'+port);
+
+			function toBase(){
+				console.log("Send to network base");
+				var newsIn = document.getElementById('newsIn').value;
+				socket.emit('sendToMain', {news: newsIn});
+				alert ("Message broadcasted to Aurelia!");
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="main">
+			<div id="feed">
+				<center><input type="text" name="name" placeholder="Reporter Name" style="margin-right: 5vw">
+				<input type="text" name="location" placeholder="Location"></center><br>
+				<center><input id="newsIn" type="text" name="headlines" placeholder="News update"></center><br>
+				<center><input id="but" onclick="toBase()" id="submit" type="button" value="Update"><center>
+			</div>
+		</div>
+	</body>
+</html>

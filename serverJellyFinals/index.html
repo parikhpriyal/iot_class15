@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!-- saved from url=(0077)http://mrdoob.github.io/three.js/examples/webgl_panorama_equirectangular.html -->
+<html lang="en" style="visibility: visible;">
+	<head>
+		<!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
+		<title>Aurelia</title>
+
+		<!-- link to stylesheet -->
+		<link rel="stylesheet" type="text/css" href="style.css">
+
+		<!-- included google font -->
+		<link href='https://fonts.googleapis.com/css?family=Iceland' rel='stylesheet' type='text/css'>
+		<meta charset="utf-8">
+
+		<!-- your server info -->
+		<script src="//192.168.1.91:8000/socket.io/socket.io.js" type="text/javascript"></script>
+
+		<!-- script for calling data from server to website -->
+		<script>
+			var socket;
+			var url='192.168.1.91';
+			var port=8000
+			
+			//initializing socket
+			socket = io.connect(url+':'+port);
+
+			//calling in data from the server
+			socket.on('toScreen', function (data) {
+				// console.log(data);
+
+				var mes = data.info;
+				// console.log(mes);
+
+  				var mes_array = mes.split(",");
+
+  				for(var i = 0; i < mes_array.length; i++) {
+   					mes_array[i] = mes_array[i].replace(/^\s*/, "").replace(/\s*$/, "");
+    			}
+
+    			// console.log(mes_array[1]);
+			// 	//parsing data received and assigning to variables
+			// 	console.log(mes_array[1]);
+				var date = mes_array[1];
+				var time = mes_array[3];
+				var weather = mes_array[4];
+				var power = mes_array[2];
+				var food = mes_array[5];
+
+			// 	// //assigning variable data to elements for viewing on screen
+				document.getElementById("date").innerHTML = date;
+				document.getElementById("time").innerHTML = time;
+				document.getElementById("weather").innerHTML = weather;
+				document.getElementById("power").innerHTML = power;
+				document.getElementById("food").innerHTML = food;
+			});
+
+			socket.on('toLowerScreen', function (data) {
+				console.log(data);
+
+				var mes = data.info;
+
+				var mes_array = mes.split(',');
+
+				for(var i = 0; i < mes_array.length; i++) {
+   					mes_array[i] = mes_array[i].replace(/^\s*/, "").replace(/\s*$/, "");
+    			}
+
+				var info = mes_array[1];
+				console.log(info);
+				document.getElementById("info").innerHTML = info;
+			});
+
+			function ToServo(){
+				var answer = document.getElementById("yesNo").value;
+				socket.emit('ToServo', {answer}); 
+			}
+
+		</script>
+	</head>
+	
+	<body>
+
+		<div id="main">
+			<!-- look -->
+			<!-- row 1 -->
+			<div id="Day">
+				<!-- <img src="assets/temp.png"> -->
+				<div id="date"></div>
+			</div>
+			<div id="Name">Aurelia</div>
+			<!-- row 2 -->
+			<div id="TimeEnergy">
+				<div id="timeRound">
+					<div id="time"></div>
+					<div id="power"></div>
+				</div>
+				<div id="powBut">
+					<form>
+						<input type="text" id="yesNo" name="Answer" placeholder="Do you need power?" size="15">
+						<input type="button" value="Generate power" id="submit" name="Power" onclick="ToServo()">
+					</form>
+				</div>
+			</div>
+			<!-- row 3 -->
+			<div id="WeathFood">
+				<div id="weather"></div>
+				<div id="food"></div>
+			</div>
+			<!-- row 4 -->
+			<div id="news">
+				<div id="info"></div>
+			</div>
+		</div>
+		
+	</body>
+</html>
