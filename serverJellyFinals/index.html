@@ -24,36 +24,34 @@
 			//initializing socket
 			socket = io.connect(url+':'+port);
 
-			//calling in data from the server
+			//Receiving data to be displayed on screen from "Jellyfish" database
 			socket.on('toScreen', function (data) {
-				// console.log(data);
-
+				
+				//assignment data to variable with key as dot notation
 				var mes = data.info;
-				// console.log(mes);
-
+				
+				//splitting data
   				var mes_array = mes.split(",");
 
   				for(var i = 0; i < mes_array.length; i++) {
    					mes_array[i] = mes_array[i].replace(/^\s*/, "").replace(/\s*$/, "");
     			}
-
-    			// console.log(mes_array[1]);
-			// 	//parsing data received and assigning to variables
-			// 	console.log(mes_array[1]);
+				//spliting array for variable assignment
 				var date = mes_array[1];
 				var time = mes_array[3];
 				var weather = mes_array[4];
 				var power = mes_array[2];
 				var food = mes_array[5];
 
-			// 	// //assigning variable data to elements for viewing on screen
+			 	//assigning variable data to elements for viewing on screen
 				document.getElementById("date").innerHTML = date;
 				document.getElementById("time").innerHTML = time;
 				document.getElementById("weather").innerHTML = weather;
 				document.getElementById("power").innerHTML = power;
 				document.getElementById("food").innerHTML = food;
 			});
-
+			
+			//sennding data from "News" database to screen
 			socket.on('toLowerScreen', function (data) {
 				console.log(data);
 
@@ -69,7 +67,8 @@
 				console.log(info);
 				document.getElementById("info").innerHTML = info;
 			});
-
+			
+			//sending message to servo through Serial
 			function ToServo(){
 				var answer = document.getElementById("yesNo").value;
 				socket.emit('ToServo', {answer}); 
