@@ -69,7 +69,8 @@ io.sockets.on('connection', function (socket) {
 		    	// console.log("Serial incoming: " + data);
 		    	process.stdout.write('Serial incoming: ' + data);
 		    	sport.write("C");
-
+			
+			//check for Serial value coming from arduino
 		    	if(data > 855){
 		    		message = 'b, send';
 		    		console.log (message);
@@ -77,7 +78,8 @@ io.sockets.on('connection', function (socket) {
            				if (err) throw err;
            				console.log('UDP message sent to ' + HOST +':'+ PORT); 
         			});
-
+				
+				//send information to website
         			client.on('message', function(message, remote){
 						// console.log("Received from server: " + message);
 
@@ -101,17 +103,10 @@ io.sockets.on('connection', function (socket) {
    							socket.emit('toScreen', {info: mes});
    						}
    					});
-
-   			// 		client.on('message', function(message, remote){
-						// // console.log("Received from server: " + message);
-
-						// var mes = message.toString();
-						// // console.log(mes);
-   			// // 			socket.emit('LowerScreen', {info: mes});
-   			// 		});
         		}
         	});
-
+			
+		//send command to arduino on receiving from html
 		    socket.on('ToServo', function (data){
 		    	console.log(data);
 
